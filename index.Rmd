@@ -1,0 +1,18 @@
+---
+title: "index"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+<font size="6"> The popularity of park events in NYC</font>
+ 
+<img src="pics/image.jpeg" style="width:75%">
+
+## Motivation
+Park events create a opportunity and space for community members to congregate safely by adding a park. By providing a safe place for kids to play, cities can enjoy more beautiful areas for residents to play and relax in. Park event provide a variety of benefits to the surrounding area. Both residents and local government officials could get benefits from park events because of safe place for physical activity and elevated property values in the immediate vicinity.
+
+## Data collection
+With the untold events in the parks throughout NYC, it can be a challenge to collect specific information of events in the parks. Based on data provided by the Department of Parks and Recreation (DPR), our project mainly focuses on the distribution of parks events in NYC with the objectives of classifying parks events with variables of different locations, times, top-rated events, events organizers, as well as events categories. We would like to create a visualized web-based overview of parks events in NYC.
+

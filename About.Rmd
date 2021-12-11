@@ -1,0 +1,46 @@
+---
+title: "About"
+author: "P8105 Final Project"
+date: "12/11/2021"
+output: html_document
+---
+
+## Team registration and proposal
+
+### Group Members
+The group members (names and UNIs)
+Yang Gao (yg2762), Jiacheng Wu (jw4183), Wentong Liu (wl2829), Yueran Zhang (yz4188), Yuxuan Li (yl4928)
+
+### The tentative project title
+“The popularity of park events in NYC”
+
+### The intended final products
+Park events distribution based on borough or categories.
+Map of park events distribution in NYC. 
+Other analyses on various common questions about park events in NYC.
+
+### The anticipated data sources
+
+[NYC Open Data](https://opendata.cityofnewyork.us/)
+
+### The main research questions
+1. If there are any differences in events time durations between different parks/locations? 
+2. What are the most popular times for park events in a day, and how does this change throughout the years?
+3. What were the most frequently held events and where were these events located?
+4. Which events organizers held the most events?
+5. Which borough has the most "must_see" events?
+
+
+### The planned timeline
+
+*Nov 11: proposal
+
+*Nov 18: meet with teaching lead
+
+*Data tidying
+*Data wrangling
+*Making plots
+*Website outlook
+*Writing descriptions, findings, discussion
+
+*Dec 11: report & webpage overview

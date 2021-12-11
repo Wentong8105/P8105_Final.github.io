@@ -1,0 +1,155 @@
+---
+title: "Event Categories"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r, message = FALSE, echo=FALSE}
+library(tidyverse)
+library(dbplyr)
+library(rvest)
+library(plotly)
+```
+
+### Data Tidying
+```{r, message = FALSE, echo = FALSE}
+park_event = read.csv("./park_events.csv") %>% 
+  select(event_id, title, date,start_time, end_time, cost_free, must_see)
+park_location = read.csv("./park_location.csv") %>% 
+  select(event_id, name, park_id, lat, long, borough)
+
+park_1 = left_join (park_event, park_location, by = "event_id") 
+ 
+park_organizer = read.csv("./park_organizer.csv")
+park_cate = read.csv ("./park_cate.csv") %>% 
+  rename(cate_name = name)
+
+park_2  = left_join (park_cate, park_organizer, by = "event_id")
+
+
+park_df = left_join (park_1, park_2,  by = "event_id")
+
+```
+After data processing and cleaning, there are 252,768 rows and 14 variables. 
+
+### Numbmer of events each year
+```{r, message = FALSE, echo=FALSE}
+park_1 %>% 
+  janitor::clean_names() %>%
+  separate(date, into = c("day","month", "year"), sep = "/") %>% 
+  group_by(year) %>% 
+  summarise(count = n()) %>% 
+  knitr::kable()
+```
+Obviously, 2013 held the most events. Top three years with most numbers of events are 2013, 2014, and 2015. 
+
+
+### What is the most popular cate?
+```{r, message = FALSE, echo=FALSE}
+park_df %>% 
+  separate(date, into = c("day","month", "year"), sep = "/") %>% 
+  group_by(cate_name) %>% 
+  summarize(count = n()) %>% 
+  filter(count > 1000) %>% 
+  mutate(cate_name = as.factor(cate_name)) %>% 
+  mutate(cate_name = fct_reorder(cate_name, count)) %>% 
+  ggplot(aes(x = cate_name, y = count)) + 
+    geom_point() + 
+    labs(
+    title = "Park Event Category",
+    x = "Event Categories",
+    y = "Count"
+  ) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+Based on the plot, top five event categories (with highest counts) are `Best for Kids`, `Fitness`, `Nature`, `Education`, `Art`. Five event categories (with lowest counts) are `My Summer House NYC`, `Shape Up New York`, `Summer Sports Expereince`, `Wildlife`, `GreemThumb Partner Events`. 
+
+### Most popular categories distribution by location
+```{r, message = FALSE, echo = FALSE}
+popular_cate = park_df %>% 
+  filter(cate_name %in% c("Best for Kids", "Fitness", "Art", "Nature", "Education")) %>% 
+
+  plot_ly(
+    x = ~lat, y = ~long, type = "scatter", mode = "markers", color = ~cate_name
+   )
+popular_cate
+  
+```
+This plot shows the distribution of the top five event categories (`Best for Kids`, `Fitness`, `Nature`, `Education`, `Art`) with specific latitudes and longitude of each locations. 
+
+### Most popular categories change by each year
+```{r, message = FALSE, echo = FALSE}
+park_df %>% 
+  separate(date, into = c("day","month", "year"), sep = "/") %>% 
+  filter(cate_name %in% c("Best for Kids", "Fitness", "Art", "Nature", "Education")) %>% 
+  group_by(year,cate_name) %>% 
+  summarize(count = n()) %>% 
+  pivot_wider(
+    names_from = year,
+    values_from = count
+  ) %>% 
+  knitr::kable()
+```
+
+
+### Organizers
+```{r, message = FALSE, echo = FALSE}
+park_df %>% 
+  separate(date, into = c("day","month", "year"), sep = "/") %>% 
+  group_by(event_organizer,year) %>% 
+  summarize(count = n()) %>% 
+  knitr::kable()
+```
+
+
+### Map 
+
+```{r, message = FALSE, echo=FALSE}
+category_count_events_df = 
+  park_df %>% 
+  group_by(lat, long, borough, name) %>% 
+  summarize(count = n())
+```
+
+```{r, message = FALSE, echo=FALSE}
+category_count_events_df %>% 
+  mutate(
+    text_label = str_c("Name: ", name, "\nBorough: ", borough, "\nCount: ", count)
+  ) %>% 
+  filter(!(name == "Empire State Plaza Convention Center")) %>% 
+  plot_ly(
+    x = ~lat, y = ~long, type = "scatter", mode = "markers", 
+    color = ~ borough, text = ~text_label, alpha = 0.5
+  )
+```
+Here's a plot map of the distribution of NYC parks events. Parks events are categorized based on borough. This map shows us not only the distribution of Parks events, but also detailed information about number of events that specific parks held. 
+
+### What are the most popular times for park events in a day, and how does this change throughout the years?
+
+```{r, message = FALSE, echo=FALSE}
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+park_1 %>% 
+  separate(date, into = c("day","month", "year"), sep = "/") %>% 
+  group_by(start_time) %>% 
+  summarise(count = n()) %>% 
+  arrange(start_time) %>% 
+ top_n(20) %>% 
+
+
+ ggplot(aes(x = start_time,y = count, color = start_time, group = 1)) + 
+  geom_point(alpha = .5) +
+    geom_line(alpha = .5) + 
+    labs(
+    title = "20 'Hits' time for a event!",
+    x = "Events Start time",
+    y = "Count"
+  ) +
+theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+```
+
+Here's the plot shows top 20 `start time` within a day which held the most parks events.  Obviously, from 7:00 am to 8:30 pm within a day, the top three `start time` which held the most parks events were 10:00 am - 11:00 am, 11:00 am - 12:00 am, and 9:00 am to 10:00 am.
+
+
