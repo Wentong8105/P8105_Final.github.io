@@ -6,13 +6,15 @@ navbar:
     - text: "Event Categories"
       href: Event-Categories.html
     - text: "Good and free"
-      href: Locations.html
+      href: Good-and-Free.html
     - text: "Others"
       href: Others.html
     - text: "Data"
       href: Data.html
     - text: "About"
       href: About.html
+    - text: "Report"
+      href: Report.html
     - icon: fa-envelope fa-lg
       href: mailto:<wl2829@columbia.edu>
     - icon: fa-github fa-lg

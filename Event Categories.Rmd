@@ -1,9 +1,7 @@
 ---
 title: "Event Categories"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  html_document
 ---
 
 ```{r, message = FALSE, echo=FALSE}
@@ -54,6 +52,7 @@ park_df %>%
   ) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
+
 Based on the plot, top five event categories (with highest counts) are `Best for Kids`, `Fitness`, `Nature`, `Education`, `Art`. Five event categories (with lowest counts) are `My Summer House NYC`, `Shape Up New York`, `Summer Sports Expereince`, `Wildlife`, `GreemThumb Partner Events`. 
 
 ### Most popular categories distribution by location

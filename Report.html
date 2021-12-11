@@ -9,11 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="P8105 Final Project" />
 
-<meta name="date" content="2021-12-11" />
 
-<title>About</title>
+<title>Report</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -287,47 +285,56 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">About</h1>
-<h4 class="author">P8105 Final Project</h4>
-<h4 class="date">12/11/2021</h4>
+<h1 class="title toc-ignore">Report</h1>
 
 </div>
 
 
-<div id="team-registration-and-proposal" class="section level2">
-<h2>Team registration and proposal</h2>
-<div id="group-members" class="section level3">
-<h3>Group Members</h3>
-<p>The group members (names and UNIs) Yang Gao (yg2762), Jiacheng Wu (jw4183), Wentong Liu (wl2829), Yueran Zhang (yz4188), Yuxuan Li (yl4928)</p>
+<div id="p8105-final-group-project" class="section level2">
+<h2>P8105 Final Group Project</h2>
+<div id="group-members-names-and-unis" class="section level3">
+<h3>Group members (names and UNIS)</h3>
+<p>-Yang Gao (yg2762) Jiacheng Wu (jw4183) Wentong Liu (wl2829) Yueran Zhang (yz4188) Yuxuan Li (yl4928)</p>
 </div>
-<div id="the-tentative-project-title" class="section level3">
-<h3>The tentative project title</h3>
-<p>“The popularity of park events in NYC”</p>
+<div id="project-title" class="section level3">
+<h3>Project Title</h3>
+<p>-Park Events In NYC</p>
 </div>
-<div id="the-intended-final-products" class="section level3">
-<h3>The intended final products</h3>
-<p>Park events distribution based on borough or categories. Map of park events distribution in NYC. Other analyses on various common questions about park events in NYC.</p>
+<div id="motivation" class="section level3">
+<h3>Motivation</h3>
+<p>-A myriad of park events take place in NYC every year, so it is challenging to collect specific information about events in the parks. Based on data provided by the Department of Parks and Recreation (DPR), we focus our project on the distribution of parks events in NYC with the objectives of classifying parks events with variables of different locations, times, top-rated events, events organizers, as well as events categories. We would like to create a visualized web-based overview of parks events in NYC.</p>
 </div>
-<div id="the-anticipated-data-sources" class="section level3">
-<h3>The anticipated data sources</h3>
-<p><a href="https://opendata.cityofnewyork.us/">NYC Open Data</a></p>
+<div id="related-works" class="section level3">
+<h3>Related works</h3>
+<p>-We were inspired by the Restaurants in NYC that we talked about in the class, as well as the previous works of Risky Coffee. So we were interested in NYC Parks Events.</p>
 </div>
-<div id="the-main-research-questions" class="section level3">
-<h3>The main research questions</h3>
-<ol style="list-style-type: decimal">
-<li>If there are any differences in events time durations between different parks/locations?</li>
-<li>What are the most popular times for park events in a day, and how does this change throughout the years?</li>
-<li>What were the most frequently held events and where were these events located?</li>
-<li>Which events organizers held the most events?</li>
-<li>Which borough has the most “must_see” events?</li>
-</ol>
+<div id="questions" class="section level3">
+<h3>Questions:</h3>
+<p>1.Were there any differences in events’ time durations between different parks/locations?</p>
+<p>2.What were the most popular times for park events in a day, and how did this change throughout the years?</p>
+<p>3.What were the most frequently held events and where were these events located?</p>
+<p>4.Which event organizers held the most events?</p>
+<p>5.Which borough had the most “must_see” events?</p>
 </div>
-<div id="the-planned-timeline" class="section level3">
-<h3>The planned timeline</h3>
-<p>*Nov 11: proposal</p>
-<p>*Nov 18: meet with teaching lead</p>
-<p><em>Data tidying </em>Data wrangling <em>Making plots </em>Website outlook *Writing descriptions, findings, discussion</p>
-<p>*Dec 11: report &amp; webpage overview</p>
+<div id="data-collection" class="section level3">
+<h3>Data Collection</h3>
+<p>-Our data was collected by the Department of Parks and Recreation (DPR). There are 7 related tables that make up the NYC Parks Events database, and we used three of those related tables to join on the primary table of events listing.</p>
+<p>-For this project, we used:</p>
+<p>1.<a href="https://data.cityofnewyork.us/City-Government/NYC-Parks-Events-Listing-Event-Locations/cpcm-i88g">Events_Events table</a> (This is the primary table that contains basic data about every event. Each record is an event.)</p>
+<p>2.<a href="https://data.cityofnewyork.us/City-Government/NYC-Parks-Events-Listing-Event-Categories/xtsw-fqvh">Events_Categories</a> (Each record is a category describing an event. One event can be in more than one category.)</p>
+<p>3.<a href="https://data.cityofnewyork.us/City-Government/NYC-Parks-Events-Listing-Event-Locations/cpcm-i88g">Events_Locations</a> (Each record is a location where an event takes place. One event can have more than one location.)</p>
+<p>4.<a href="https://data.cityofnewyork.us/City-Government/NYC-Parks-Events-Listing-Event-Organizers/jk6k-yab4">Events_Organizers</a> (Each record contains a group or person organizing an event. One event can have more than one organizer.)</p>
+</div>
+<div id="note" class="section level3">
+<h3>Note*</h3>
+<p>-After meeting with TA, we decided to change our dataset from Restaurants in NYC to Parks Events in NYC.</p>
+<p>-Each member in our group contributed equally to the project. We met frequently both in person and zoom. We divided projects into several parts and we did data processing/analysis, wrote codes/descriptions together. Wentong Liu (wl2829) is responsible for summarizing and committing/pushing everything at the end.</p>
+</div>
+<div id="discussion" class="section level3">
+<h3>Discussion:</h3>
+<p>Our project collected data of park events in NYC by mainly focusing on specific locations, boroughs, time, organizers, and categories. We were interested in research questions regarding the number of events each year, the most popular categories, the most popular categories by year and locations, most popular events by organizers, the distribution of NYC parks events by boroughs, the most popular times for park events in a day, as well as the most must-see events and the proportion of free events between different boroughs.</p>
+<p>By data analysis and visualizations, answers to our research questions could be easily observed. We found that the events category of Best for kids was the most popular in NYC, Manhattan had the most events, and the Morning Fitness at Fort Tryon Park in Manhattan was the most popular park event. Manhattan, Brooklyn, and Staten Island are the top three boroughs that held the most free events. We also noticed that 2013 held the most events, and 9:00 am, 10:00 am, and 11:00 am are the top three events’ start-time from 7:00 am to 8:30 pm within a day.</p>
+<p>The results of our project are consistent with our motivation and aim of classifying parks events with variables of different locations, times, top-rated events, events organizers, as well as events categories, which are also helpful for visualizing the distribution of parks events in NYC.</p>
 </div>
 </div>
 

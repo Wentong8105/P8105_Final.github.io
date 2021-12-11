@@ -1,9 +1,7 @@
 ---
 title: "Park Events In NYC"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  html_document
 ---
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -15,6 +13,7 @@ library(plotly)
 <font size="6"> The popularity of park events in NYC</font>
  
 <img src="pics/image.jpeg" style="width:75%">
+
 
 ## Motivation
 Park events create a opportunity and space for community members to congregate safely by adding a park. By providing a safe place for kids to play, cities can enjoy more beautiful areas for residents to play and relax in. Park event provide a variety of benefits to the surrounding area. Both residents and local government officials could get benefits from park events because of safe place for physical activity and elevated property values in the immediate vicinity.
@@ -63,3 +62,7 @@ category_count_events_df %>%
   )
 ```
 Here's a plot map of the distribution of NYC parks events. Parks events are categorized based on borough. This map shows us not only the distribution of Parks events, but also detailed information about number of events that specific parks held. 
+
+### Screencast
+
+*[Screen](https://youtu.be/LDtcDWCGb7k)
