@@ -33,7 +33,8 @@ park_df = left_join (park_1, park_2,  by = "event_id")
 
 ```
 
-
+### Must-see Events
+A good park event can be seen from the must see indicator. We want to show people who are interested in the park event which area contains the most park events worth participating in.
 
 ```{r, echo=FALSE, message=FALSE}
 ## Most popular events
@@ -59,6 +60,7 @@ mustsee_df %>%
 
 Obviously, Manhattan had the most must-see events given its world-renowned reputation and its numerous and diverse park events. 
 
+### Free Events
 ```{r, echo=FALSE, message=FALSE}
 costfree_df =
   park_df %>% 
@@ -83,7 +85,7 @@ noncostfree_df =
 cost_df = left_join(costfree_df, noncostfree_df, by = "borough")
 
 cost_df %>% 
-  ggplot(aes(x = borough, y = count.x / (count.x+count.y))) +
+  ggplot(aes(x = borough, y = count.x / (count.x + count.y))) +
   geom_bar(stat = "identity", position = "dodge") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   labs(title = "Proportions of Free Park Events",
