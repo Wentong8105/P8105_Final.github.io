@@ -34,19 +34,9 @@ park_df = left_join (park_1, park_2,  by = "event_id")
 ```
 After data processing and cleaning, there are 252,768 rows and 14 variables. 
 
-### Numbmer of events each year
-```{r, message = FALSE, echo=FALSE}
-park_1 %>% 
-  janitor::clean_names() %>%
-  separate(date, into = c("day","month", "year"), sep = "/") %>% 
-  group_by(year) %>% 
-  summarise(count = n()) %>% 
-  knitr::kable()
-```
-Obviously, 2013 held the most events. Top three years with most numbers of events are 2013, 2014, and 2015. 
 
 
-### What is the most popular cate?
+### Popular categories
 ```{r, message = FALSE, echo=FALSE}
 park_df %>% 
   separate(date, into = c("day","month", "year"), sep = "/") %>% 
@@ -92,64 +82,82 @@ park_df %>%
   ) %>% 
   knitr::kable()
 ```
+### 5 most popular categories.
 
+To be more specific, we pick up 5 most held types of events in New York throughout the years. 
 
-### Organizers
-```{r, message = FALSE, echo = FALSE}
+```{r, echo=FALSE}
 park_df %>% 
-  separate(date, into = c("day","month", "year"), sep = "/") %>% 
-  group_by(event_organizer,year) %>% 
+  select(cate_name) %>% 
+  group_by(cate_name) %>% 
   summarize(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  head(5) %>% 
   knitr::kable()
+
 ```
 
+From this table, we can see that "Best for kids" is the most popular category in New York City. It seems that people love to bring their kids to park events to relax. To find out the exact 5 most popular categories, we created a barplot showing the top 5 category distribution in each borough. 
 
-### Map 
 
-```{r, message = FALSE, echo=FALSE}
-category_count_events_df = 
+```{r, echo=FALSE, message=FALSE}
+## Most popular categories
+B_df = 
   park_df %>% 
-  group_by(lat, long, borough, name) %>% 
-  summarize(count = n())
+  group_by(borough, cate_name) %>% 
+  summarize(count = n()) %>% 
+  filter(borough == "B") %>% 
+  arrange(desc(count)) %>% 
+  head(5)
+
+M_df = 
+  park_df %>% 
+  group_by(borough, cate_name) %>% 
+  summarize(count = n()) %>% 
+  filter(borough == "M") %>% 
+  arrange(desc(count)) %>% 
+  head(5)
+
+Q_df = 
+  park_df %>% 
+  group_by(borough, cate_name) %>% 
+  summarize(count = n()) %>% 
+  filter(borough == "Q") %>% 
+  arrange(desc(count)) %>% 
+  head(5) 
+
+R_df = 
+  park_df %>% 
+  group_by(borough, cate_name) %>% 
+  summarize(count = n()) %>% 
+  filter(borough == "R") %>% 
+  arrange(desc(count)) %>% 
+  head(5)
+
+X_df = 
+  park_df %>% 
+  group_by(borough, cate_name) %>% 
+  summarize(count = n()) %>% 
+  filter(borough == "X") %>% 
+  arrange(desc(count)) %>% 
+  head(5)
+
+first_df = rbind(M_df, B_df)
+second_df = rbind(Q_df, R_df)
+third_df = rbind(first_df, second_df)
+whole_df = rbind(third_df, X_df)
+
+whole_df %>% 
+  mutate(borough = recode(borough, B = "Brooklyn", M = "Manhattan", Q = "Queens", R = "State Island", X = "Bronx")) %>% 
+  ggplot(aes(x = borough, y = count, fill = cate_name)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(title = "Most Popular Categories") +
+  coord_flip()
 ```
 
-```{r, message = FALSE, echo=FALSE}
-category_count_events_df %>% 
-  mutate(
-    text_label = str_c("Name: ", name, "\nBorough: ", borough, "\nCount: ", count)
-  ) %>% 
-  filter(!(name == "Empire State Plaza Convention Center")) %>% 
-  plot_ly(
-    x = ~lat, y = ~long, type = "scatter", mode = "markers", 
-    color = ~ borough, text = ~text_label, alpha = 0.5
-  )
-```
-Here's a plot map of the distribution of NYC parks events. Parks events are categorized based on borough. This map shows us not only the distribution of Parks events, but also detailed information about number of events that specific parks held. 
-
-### What are the most popular times for park events in a day, and how does this change throughout the years?
-
-```{r, message = FALSE, echo=FALSE}
-theme_set(theme_minimal() + theme(legend.position = "bottom"))
-
-park_1 %>% 
-  separate(date, into = c("day","month", "year"), sep = "/") %>% 
-  group_by(start_time) %>% 
-  summarise(count = n()) %>% 
-  arrange(start_time) %>% 
- top_n(20) %>% 
+Although Manhattan is the smallest borough, it is the most densely populated, so it is no surprise that Manhattan had the most events. The top 5 categories were fitness, nature, volunteer, best for kids and tours. The most popular categories in other boroughs were similar to those of Manhattan. However, art & crafts park events were higher in the popularity rank compared to their counterparts in Bronx, Queens, and Staten Island.
 
 
- ggplot(aes(x = start_time,y = count, color = start_time, group = 1)) + 
-  geom_point(alpha = .5) +
-    geom_line(alpha = .5) + 
-    labs(
-    title = "20 'Hits' time for a event!",
-    x = "Events Start time",
-    y = "Count"
-  ) +
-theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
-```
-
-Here's the plot shows top 20 `start time` within a day which held the most parks events.  Obviously, from 7:00 am to 8:30 pm within a day, the top three `start time` which held the most parks events were 10:00 am - 11:00 am, 11:00 am - 12:00 am, and 9:00 am to 10:00 am.
 
 

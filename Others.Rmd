@@ -1,0 +1,145 @@
+---
+title: "Others"
+author: "Wentong"
+date: "12/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(dbplyr)
+library(rvest)
+library(plotly)
+```
+
+
+
+
+```{r, include=FALSE}
+
+park_event = read.csv("./park_events.csv") %>% 
+  select(event_id, title, date,start_time, end_time, cost_free, must_see)
+park_location = read.csv("./park_location.csv") %>% 
+  select(event_id, name, park_id, lat, long, borough)
+
+park_1 = left_join(park_event, park_location, by = "event_id") 
+ 
+park_organizer = read.csv("./park_organizer.csv")
+park_cate = read.csv("./park_cate.csv") %>% 
+  rename(cate_name = name)
+
+park_2  = left_join (park_cate, park_organizer, by = "event_id")
+
+
+park_df = left_join (park_1, park_2,  by = "event_id")
+
+
+```
+
+### Numbmer of events each year
+```{r, message = FALSE, echo=FALSE}
+park_1 %>% 
+  janitor::clean_names() %>%
+  separate(date, into = c("day","month", "year"), sep = "/") %>% 
+  group_by(year) %>% 
+  summarise(count = n()) %>% 
+  knitr::kable()
+```
+Obviously, 2013 held the most events. Top three years with most numbers of events are 2013, 2014, and 2015. 
+
+### Popular events
+
+```{r, echo=FALSE, message=FALSE}
+## Most popular events
+BB_df = 
+  park_df %>% 
+  group_by(borough, title) %>% 
+  summarize(count = n()) %>% 
+  filter(borough == "B") %>% 
+  arrange(desc(count)) %>% 
+  head(5)
+
+MM_df = 
+  park_df %>% 
+  group_by(borough, title) %>% 
+  summarize(count = n()) %>% 
+  filter(borough == "M") %>% 
+  arrange(desc(count)) %>% 
+  head(5)
+
+QQ_df = 
+  park_df %>% 
+  group_by(borough, title) %>% 
+  summarize(count = n()) %>% 
+  filter(borough == "Q") %>% 
+  arrange(desc(count)) %>% 
+  head(5) 
+
+RR_df = 
+  park_df %>% 
+  group_by(borough, title) %>% 
+  summarize(count = n()) %>% 
+  filter(borough == "R") %>% 
+  arrange(desc(count)) %>% 
+  head(5)
+
+XX_df = 
+  park_df %>% 
+  group_by(borough, title) %>% 
+  summarize(count = n()) %>% 
+  filter(borough == "X") %>% 
+  arrange(desc(count)) %>% 
+  head(5)
+
+first1_df = rbind(MM_df, BB_df)
+second1_df = rbind(QQ_df, RR_df)
+third1_df = rbind(first1_df, second1_df)
+whole1_df = rbind(third1_df, XX_df)
+
+whole1_df %>% 
+  mutate(borough = recode(borough, B = "Brooklyn", M = "Manhattan", Q = "Queens", R = "State Island", X = "Bronx")) %>%
+  arrange(desc(count)) %>% 
+  head(12) %>% 
+  knitr::kable()
+```
+
+The most popular park event in Manhattan was "Morning Fitness at Fort Tryon Park," which is consistent with the No.1 popularity of fitness events. The same can be said of the other boroughs. The top events of the Bronx and Staten Island were about nature, pop culture, and mysteries from the past. Brooklyn apparently attached greater importance to education and teenager lives, making it a fantastic destination for kids and their parents. Lastly, the Queens did live up to its name, with "Leading the Way: Six Outstanding Women of Queens" as the most popular park event. 
+
+
+### Oganizers
+```{r, message = FALSE, echo = FALSE}
+park_df %>% 
+  separate(date, into = c("day","month", "year"), sep = "/") %>% 
+  group_by(event_organizer,year) %>% 
+  summarize(count = n()) %>%
+  arrange(desc(count)) %>%
+  head(5) %>% 
+  knitr::kable()
+```
+
+
+### The most popular times for park events in a day.
+
+```{r, message = FALSE, echo=FALSE}
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+park_1 %>% 
+  separate(date, into = c("day","month", "year"), sep = "/") %>% 
+  group_by(start_time) %>% 
+  summarise(count = n()) %>% 
+  arrange(start_time) %>% 
+ top_n(20) %>% 
+
+
+ ggplot(aes(x = start_time,y = count, color = start_time, group = 1)) + 
+  geom_point(alpha = .5) +
+    geom_line(alpha = .5) + 
+    labs(
+    title = "20 'Hits' time for a event!",
+    x = "Events Start time",
+    y = "Count"
+  ) +
+theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+```
+
+Here's the plot shows top 20 `start time` within a day which held the most parks events.  Obviously, from 7:00 am to 8:30 pm within a day, the top three `start time` which held the most parks events were 10:00 am - 11:00 am, 11:00 am - 12:00 am, and 9:00 am to 10:00 am.

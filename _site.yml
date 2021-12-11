@@ -3,19 +3,25 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "Locations"
-      href: Locations.html
     - text: "Event Categories"
       href: Event-Categories.html
+    - text: "Good and free"
+      href: Locations.html
+    - text: "Others"
+      href: Others.html
     - text: "Data"
       href: Data.html
     - text: "About"
       href: About.html
     - icon: fa-envelope fa-lg
-      href: mailto:<yg2762@columbia.edu>
+      href: mailto:<wl2829@columbia.edu>
     - icon: fa-github fa-lg
-      href: http://github.com/yg2762/
+      href: https://github.com/Wentong8105/P8105_Final.github.io.git
       
 output:
   html_document:
     theme: cosmo
+    
+    
+
+    

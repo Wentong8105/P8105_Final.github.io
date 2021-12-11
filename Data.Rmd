@@ -3,7 +3,7 @@ title: "Data"
 output: html_document
 ---
 
-## Data Sources
+### Data Sources
 
 All data was downloaded from [NYC Open Data](https://opendata.cityofnewyork.us/).
 
@@ -21,7 +21,7 @@ For this project, we used:
 [Events_Organizers](https://data.cityofnewyork.us/City-Government/NYC-Parks-Events-Listing-Event-Organizers/jk6k-yab4) (Each record contains a group or person organizing an event. One event can have more than one organizer.)
 
 
-## Data Description
+### Data Description
 
 For data analysis, we mainly focused on `park_events.csv`, which is our primary data source. We also used three related tables, `park_location.csv`, `park_organizer.csv`, and `park_cate.csv`, that make up the NYC Parks Events database to join on the primary table of events listing. 
 

@@ -5,6 +5,12 @@ output:
     toc: true
     toc_float: true
 ---
+```{r setup, include=FALSE}
+library(tidyverse)
+library(dbplyr)
+library(rvest)
+library(plotly)
+```
 
 <font size="6"> The popularity of park events in NYC</font>
  
@@ -16,3 +22,44 @@ Park events create a opportunity and space for community members to congregate s
 ## Data collection
 With the untold events in the parks throughout NYC, it can be a challenge to collect specific information of events in the parks. Based on data provided by the Department of Parks and Recreation (DPR), our project mainly focuses on the distribution of parks events in NYC with the objectives of classifying parks events with variables of different locations, times, top-rated events, events organizers, as well as events categories. We would like to create a visualized web-based overview of parks events in NYC.
 
+## Map
+```{r, include=FALSE}
+
+park_event = read.csv("./park_events.csv") %>% 
+  select(event_id, title, date,start_time, end_time, cost_free, must_see)
+park_location = read.csv("./park_location.csv") %>% 
+  select(event_id, name, park_id, lat, long, borough)
+
+park_1 = left_join(park_event, park_location, by = "event_id") 
+ 
+park_organizer = read.csv("./park_organizer.csv")
+park_cate = read.csv("./park_cate.csv") %>% 
+  rename(cate_name = name)
+
+park_2  = left_join (park_cate, park_organizer, by = "event_id")
+
+
+park_df = left_join (park_1, park_2,  by = "event_id")
+
+
+```
+
+```{r, message = FALSE, echo=FALSE}
+category_count_events_df = 
+  park_df %>% 
+  group_by(lat, long, borough, name) %>% 
+  summarize(count = n())
+```
+
+```{r, message = FALSE, echo=FALSE}
+category_count_events_df %>% 
+  mutate(
+    text_label = str_c("Name: ", name, "\nBorough: ", borough, "\nCount: ", count)
+  ) %>% 
+  filter(!(name == "Empire State Plaza Convention Center")) %>% 
+  plot_ly(
+    x = ~lat, y = ~long, type = "scatter", mode = "markers", 
+    color = ~ borough, text = ~text_label, alpha = 0.5
+  )
+```
+Here's a plot map of the distribution of NYC parks events. Parks events are categorized based on borough. This map shows us not only the distribution of Parks events, but also detailed information about number of events that specific parks held. 

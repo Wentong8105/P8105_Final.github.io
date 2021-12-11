@@ -247,19 +247,28 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="park_event.html">Event Categories</a>
+  <a href="Event-Categories.html">Event Categories</a>
+</li>
+<li>
+  <a href="Locations.html">Good and free</a>
+</li>
+<li>
+  <a href="Others.html">Others</a>
 </li>
 <li>
   <a href="Data.html">Data</a>
 </li>
 <li>
-  <a href="mailto:&lt;yg2762@columbia.edu&gt;">
+  <a href="About.html">About</a>
+</li>
+<li>
+  <a href="mailto:&lt;wl2829@columbia.edu&gt;">
     <span class="fa fa-envelope fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="http://github.com/yg2762/">
+  <a href="https://github.com/Wentong8105/P8105_Final.github.io.git">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -278,8 +287,8 @@ $(document).ready(function () {
 </div>
 
 
-<div id="data-sources" class="section level2">
-<h2>Data Sources</h2>
+<div id="data-sources" class="section level3">
+<h3>Data Sources</h3>
 <p>All data was downloaded from <a href="https://opendata.cityofnewyork.us/">NYC Open Data</a>.</p>
 <p>The NYC Parks Events Listing database is used to store event information displayed on the <a href="nyc.gov/parks">Parks Website</a>. There are seven related tables that make up the this database, this project used four of them. (For a complete list of related datasets, please follow <a href="https://data.cityofnewyork.us/browse?Data-Collection_Data-Collection=NYC+Parks+Events&amp;sortBy=alpha">here</a>.)</p>
 <p>For this project, we used:</p>
@@ -288,8 +297,8 @@ $(document).ready(function () {
 <p><a href="https://data.cityofnewyork.us/City-Government/NYC-Parks-Events-Listing-Event-Locations/cpcm-i88g">Events_Locations</a> (Each record is a location where an event takes place. One event can have more than one location.)</p>
 <p><a href="https://data.cityofnewyork.us/City-Government/NYC-Parks-Events-Listing-Event-Organizers/jk6k-yab4">Events_Organizers</a> (Each record contains a group or person organizing an event. One event can have more than one organizer.)</p>
 </div>
-<div id="data-description" class="section level2">
-<h2>Data Description</h2>
+<div id="data-description" class="section level3">
+<h3>Data Description</h3>
 <p>For data analysis, we mainly focused on <code>park_events.csv</code>, which is our primary data source. We also used three related tables, <code>park_location.csv</code>, <code>park_organizer.csv</code>, and <code>park_cate.csv</code>, that make up the NYC Parks Events database to join on the primary table of events listing.</p>
 <p>After data processing and data cleaning, our final data frame <code>park_df</code> contains 252768 rows and 14 variables. Among those variables, we are interested in:</p>
 <p><code>title</code>. Titles of Parks Events.</p>
