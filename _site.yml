@@ -11,8 +11,6 @@ navbar:
       href: Others.html
     - text: "Data"
       href: Data.html
-    - text: "About"
-      href: About.html
     - text: "Report"
       href: Report.html
     - icon: fa-envelope fa-lg
